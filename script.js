@@ -1,35 +1,29 @@
 "use strict";
 
+let count = 0;
+
 let counterValue = document.getElementById("counter-value");
-let currentValue = +counterValue.innerHTML;
+let btns = document.querySelectorAll(".btn");
 
-let decreaseBtn = document.getElementById("decrease-btn");
-decreaseBtn.addEventListener("click", decreaseValue);
+btns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    let styles = e.currentTarget.classList;
+    if (styles.contains("decrease")) {
+      count--;
+    } else if (styles.contains("increase")) {
+      count++;
+    } else {
+      count = 0;
+    }
 
-let increaseBtn = document.getElementById("increase-btn");
-increaseBtn.addEventListener("click", increaseValue);
+    counterValue.textContent = count;
 
-let resetBtn = document.getElementById("reset-btn");
-resetBtn.addEventListener("click", resetValue);
-function decreaseValue() {
-  counterValue.innerHTML = `${--currentValue}`;
-  setCurrentValueColor(currentValue);
-}
-function increaseValue() {
-  counterValue.innerHTML = `${++currentValue}`;
-  setCurrentValueColor(currentValue);
-}
-function resetValue() {
-  currentValue = 0;
-  counterValue.innerHTML = `${currentValue}`;
-  setCurrentValueColor(currentValue);
-}
-
-function setCurrentValueColor(value) {
-  if (value < 0) counterValue.style.color = "#FF0000";
-  else if (value > 0) {
-    counterValue.style.color = "#00FF00";
-  } else {
-    counterValue.style.color = "#000";
-  }
-}
+    if (count > 0) {
+      counterValue.style.color = "green";
+    } else if (count < 0) {
+      counterValue.style.color = "red";
+    } else {
+      counterValue.style.color = "#222";
+    }
+  });
+});
